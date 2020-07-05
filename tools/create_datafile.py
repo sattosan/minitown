@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # API URL
-URL = os.environ["RAKUTEN_URL"]
+API_URL = os.environ["RAKUTEN_API"]
 
 # クエリパラメータ
 payload = {
@@ -21,7 +21,7 @@ fashions = []
 print("==========服の取得を開始==========")
 while True:
     # 商品情報を取得
-    response = requests.get(URL, params=payload)
+    response = requests.get(API_URL, params=payload)
     data = json.loads(response.text)
     print(f"{data['page']}ページ目取得")
 
