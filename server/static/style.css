@@ -1,0 +1,38 @@
+header {
+  padding: 0.35em 2em;
+  background: #323232;
+}
+
+header a {
+  font-size: 26px;
+  font-weight: bold;
+  color: white;
+}
+
+header a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.card {
+  margin: 1.25rem;
+}
+
+.application-body {
+  padding: 1.25em;
+}
+
+.search-form {
+  margin-bottom: 0.75rem;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(0,0,0,0.25);
+  padding: 1.25rem;
+}
+
+.price::placeholder {
+  text-align: right;
+}
+
+em {
+  background: linear-gradient(transparent 0%, #ffff66 0%);;
+}
