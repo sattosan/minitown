@@ -1,11 +1,8 @@
 from elasticsearch import Elasticsearch
-from dotenv import load_dotenv
-
-load_dotenv()
 
 
 def search(param):
-    # Elasticsearchクライアント
+    # Elasticsearchインスタンスを作成
     es = Elasticsearch("http://elasticsearch:9200")
 
     # Elasticsearchに投げるクエリ
