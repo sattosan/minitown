@@ -1,5 +1,5 @@
 from flask import Flask, request, url_for, render_template
-from search import search
+from search import search, trim_fashions
 
 app = Flask(__name__)
 
@@ -10,8 +10,11 @@ def show_results():
     result = search(request.form)
     # ヒット件数
     result_num = result['hits']['total']['value']
-    # 商品リスト
-    fashions = result['hits']['hits']
+    # ドキュメント情報
+    documents = result['hits']['hits']
+    # ファッション情報
+    fashions = trim_fashions(documents)
+
     # ページのレンダリング
     return render_template('index.html',
                            result_num=result_num,

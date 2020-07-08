@@ -41,19 +41,19 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-2">
-                    <img src="{{fashion._source.mediumImageUrls[0].imageUrl }}">
+                    <img src="{{fashion.image_url }}">
                 </div>
                 <div class="col-lg-10">
                     <h4 class="card-title">
-                        {{ fashion._source.itemName }}
+                        {{ fashion.name }}
                     </h4>
-                    <h5 class="card-title">{{ fashion._source.shopName }}</h5>
-                    <h5 class="card-title">{{ fashion._source.itemPrice }}円</h5>
+                    <h5 class="card-title">{{ fashion.shop_name }}</h5>
+                    <h5 class="card-title">{{ fashion.price }}円</h5>
                     <p class="card-text">
                     {% if fashion.highlight  %}
                         {{ fashion.highlight.itemCaption[0] | safe }}
                     {% else %}
-                        {{ fashion._source.itemCaption }}
+                        {{ fashion.caption }}
                     {% endif %}
                     </p>
                 </div>
