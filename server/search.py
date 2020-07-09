@@ -51,7 +51,7 @@ def search(param):
         )
 
     # Elasticsearchにクエリを投げて商品を検索
-    result = es.search(index='fashion', body=body, size=20)
+    result = es.search(index='fashion', body=body, size=100)
 
     return result
 
@@ -64,6 +64,7 @@ def trim_fashions(documents):
         name = document["_source"]["itemName"]
         shop_name = document["_source"]["shopName"]
         price = document["_source"]["itemPrice"]
+        caption = document["_source"]["itemCaption"]
 
         # 画像がなければ
         if len(document["_source"]["mediumImageUrls"]) == 0:
@@ -71,11 +72,13 @@ def trim_fashions(documents):
         else:
             image_url = document["_source"]["mediumImageUrls"][0]["imageUrl"]
 
-        # ハイライトがあれば
         if "highlight" in document:
-            caption = document["highlight"]["itemCaption"][0]
-        else:
-            caption = document["_source"]["itemCaption"]
+            # ハイライトにitemCaptionがあれば
+            if "itemCaption" in document["highlight"]:
+                caption = document["highlight"]["itemCaption"][0]
+            # ハイライトにitemCaptionがなかった場合itemNameをハイライト
+            elif "itemName" in document["highlight"]:
+                name = document["highlight"]["itemName"][0]
 
         fashions.append({
             "name": name,

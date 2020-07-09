@@ -62,7 +62,7 @@
                     <img src="{{fashion.image_url }}">
                 </div>
                 <div class="col-lg-10">
-                    <h4 class="card-title">{{ fashion.name }}</h4>
+                    <h4 class="card-title">{{ fashion.name | safe }}</h4>
                     <h5 class="card-title">{{ fashion.shop_name }}</h5>
                     <h5 class="card-title">{{ fashion.price }}円</h5>
                     <p class="card-text">{{ fashion.caption | safe }}</p>
