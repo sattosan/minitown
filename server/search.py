@@ -10,8 +10,7 @@ def search(param):
     body = {
         "query": {
             "bool": {
-                "must": [
-                ]
+                "must": []
             }
         },
         "highlight": {
