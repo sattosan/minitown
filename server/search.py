@@ -45,7 +45,7 @@ def search(param):
             {"range": {"itemPrice": {"lte": price_max}}})
 
     # Elasticsearchにクエリを投げて商品を検索
-    result = es.search(index='fashion', body=body, size=5)
+    result = es.search(index='fashion', body=body, size=20)
 
     return result
 
@@ -55,16 +55,28 @@ def trim_fashions(documents):
     fashions = []
 
     for document in documents:
-        image_url = ""
-        if len(document["_source"]["mediumImageUrls"]) > 0:
+        name = document["_source"]["itemName"]
+        shop_name = document["_source"]["shopName"]
+        price = document["_source"]["itemPrice"]
+
+        # 画像がなければ
+        if len(document["_source"]["mediumImageUrls"]) == 0:
+            continue
+        else:
             image_url = document["_source"]["mediumImageUrls"][0]["imageUrl"]
 
+        # ハイライトにitemCaptionがあれば
+        if document["highlight"]["itemCaption"]:
+            caption = document["highlight"]["itemCaption"][0]
+        else:
+            caption = document["_source"]["itemCaption"]
+
         fashions.append({
-            "name": name if (name := document["_source"]["itemName"]) else "",
+            "name": name,
             "image_url": image_url,
-            "shop_name": shop_name if (shop_name := document["_source"]["shopName"]) else "",
-            "price": price if (price := document["_source"]["itemPrice"]) else "",
-            "caption": caption if (caption := document["_source"]["itemCaption"]) else ""
+            "shop_name": shop_name,
+            "price": price,
+            "caption": caption
         })
 
     return fashions
