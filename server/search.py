@@ -15,6 +15,7 @@ def search(param):
         },
         "highlight": {
             "fields": {
+                "itemName": {},
                 "itemCaption": {}
             }
         }
@@ -43,6 +44,12 @@ def search(param):
         body['query']['bool']['must'].append(
             {"range": {"itemPrice": {"lte": price_max}}})
 
+    # 性別が選択された場合
+    if (sex := param.get('sex')) and not sex == "all":
+        body['query']['bool']['must'].append(
+            {'term': {'sex': {'value': sex}}}
+        )
+
     # Elasticsearchにクエリを投げて商品を検索
     result = es.search(index='fashion', body=body, size=20)
 
@@ -64,8 +71,8 @@ def trim_fashions(documents):
         else:
             image_url = document["_source"]["mediumImageUrls"][0]["imageUrl"]
 
-        # ハイライトにitemCaptionがあれば
-        if document["highlight"]["itemCaption"]:
+        # ハイライトがあれば
+        if "highlight" in document:
             caption = document["highlight"]["itemCaption"][0]
         else:
             caption = document["_source"]["itemCaption"]
